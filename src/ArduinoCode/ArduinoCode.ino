@@ -27,13 +27,15 @@
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
+#include <ESP8266HTTPClient.h>
+#include <ESP8266httpUpdate.h>
 
 
 
 /************ WIFI and MQTT Information (CHANGE THESE FOR YOUR SETUP) ******************/
-const char* ssid = "Cakes"; //type your WIFI information inside the quotes
-const char* password = "deadbeef10";
-const char* mqtt_server = "192.168.1.28";
+const char* ssid = "Virus"; //type your WIFI information inside the quotes
+const char* password = "yourPassword";
+const char* mqtt_server = "192.168.1.118";
 const char* mqtt_username = "admin";
 const char* mqtt_password = "password";
 const int mqtt_port = 1883;
@@ -42,9 +44,10 @@ const int mqtt_port = 1883;
 
 /**************************** FOR OTA **************************************************/
 #define SENSORNAME "stripRoss" //change this to whatever you want to call your device
-#define OTApassword "strip1Password" //the password you will need to enter to upload remotely via the ArduinoIDE
-int OTAport = 8266;
 
+/* HTTP Server OTA */
+const int FW_VERSION = 0005; // increment this on each update.
+const char* fwUrlBase = "http://"+ mqtt_server +":8266/update_firmware/"; // Url to the http server that will provide update.
 
 
 /************* MQTT TOPICS (change these topics as you wish)  **************************/
@@ -181,6 +184,15 @@ struct CRGB leds[NUM_LEDS];
 
 
 
+void allWhite() {
+  for (int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = CRGB(255, 255, 235);
+  }
+  delay(5);
+  FastLED.show();
+}
+
+
 /********************************** START SETUP*****************************************/
 void setup() {
   Serial.begin(115200);
@@ -194,37 +206,82 @@ void setup() {
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
 
-  //OTA SETUP
-  ArduinoOTA.setPort(OTAport);
-  // Hostname defaults to esp8266-[ChipID]
-  ArduinoOTA.setHostname(SENSORNAME);
-
-  // No authentication by default
-  ArduinoOTA.setPassword((const char *)OTApassword);
-
-  ArduinoOTA.onStart([]() {
-    Serial.println("Starting");
-  });
-  ArduinoOTA.onEnd([]() {
-    Serial.println("\nEnd");
-  });
-  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
-  });
-  ArduinoOTA.onError([](ota_error_t error) {
-    Serial.printf("Error[%u]: ", error);
-    if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-    else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-    else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-    else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-    else if (error == OTA_END_ERROR) Serial.println("End Failed");
-  });
-  ArduinoOTA.begin();
 
   Serial.println("Ready");
   Serial.print("IP Address: ");
   Serial.println(WiFi.localIP());
 
+  checkForUpdates();
+
+  Serial.println("DONE CHECKING FOR UPDATES!!!");
+
+}
+
+
+/********************************** CHECK FOR UPDATES (OTA) *****************************************/
+void checkForUpdates() {
+  String mac = getMAC();
+  String fwURL = String( fwUrlBase );
+  String fwVersionURL = fwURL;
+  fwVersionURL.concat( "version" );
+  // fwVersionURL.concat( ".version" );
+
+  Serial.println( "Checking for firmware updates." );
+  Serial.print( "MAC address: " );
+  Serial.println( "ArduinoCode.ino.nodemcu.bin" );
+  Serial.print( "Firmware version URL: " );
+  Serial.println( fwVersionURL );
+
+  HTTPClient httpClient;
+  httpClient.begin( fwVersionURL );
+  int httpCode = httpClient.GET();
+  if( httpCode == 200 ) {
+    String newFWVersion = httpClient.getString();
+
+    Serial.print( "Current firmware version: " );
+    Serial.println( FW_VERSION );
+    Serial.print( "Available firmware version: " );
+    Serial.println( newFWVersion );
+
+    int newVersion = newFWVersion.toInt();
+
+    if( newVersion > FW_VERSION ) {
+      Serial.println( "Preparing to update" );
+
+      String fwImageURL = fwURL;
+      Serial.println( fwImageURL );
+      t_httpUpdate_return ret = ESPhttpUpdate.update( fwImageURL );
+
+      switch(ret) {
+        case HTTP_UPDATE_FAILED:
+          Serial.printf("HTTP_UPDATE_FAILD Error (%d): %s", ESPhttpUpdate.getLastError(), ESPhttpUpdate.getLastErrorString().c_str());
+          break;
+
+        case HTTP_UPDATE_NO_UPDATES:
+          Serial.println("HTTP_UPDATE_NO_UPDATES");
+          break;
+      }
+    }
+    else {
+      Serial.println( "Already on latest version" );
+    }
+  }
+  else {
+    Serial.print( "Firmware version check failed, got HTTP response code " );
+    Serial.println( httpCode );
+  }
+  httpClient.end();
+}
+
+
+String getMAC()
+{
+  uint8_t mac[6];
+  char result[14];
+
+ snprintf( result, sizeof( result ), "%02x%02x%02x%02x%02x%02x", mac[ 0 ], mac[ 1 ], mac[ 2 ], mac[ 3 ], mac[ 4 ], mac[ 5 ] );
+
+  return String( result );
 }
 
 
@@ -505,11 +562,7 @@ void loop() {
     return;
   }
 
-
-
   client.loop();
-
-  ArduinoOTA.handle();
 
   /*analogValue= analogRead(AOUT_PIN);// hoping to read messages from the sound sensor
   Serial.print("analogValue: ");
