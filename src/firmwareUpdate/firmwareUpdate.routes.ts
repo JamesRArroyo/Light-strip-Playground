@@ -4,11 +4,13 @@ import * as path from 'path';
 
 
 export class FirmwareUpdates {
+    firmwareVersionNumber:string = '0005'
+
     public routes(app): void {
 
 
         app.route('/update_firmware/version').get((req: Request, res: Response) => {
-            res.status(200).send('0005');
+            res.status(200).send(this.firmwareVersionNumber);
         })
 
         app.route('/update_firmware')
