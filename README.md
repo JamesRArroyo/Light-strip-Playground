@@ -5,7 +5,7 @@ Control multiple light strips each on their own ESP8266. Supports OTA updates.
 ## Prerequisites
 
 - Install Node.js® and npm if they are not already on your machine.
-- Update `src/ArduinoCode/ArduinoCode.ini` variables (Wifi, Node ip, etc..)
+- Update `dist/ArduinoCode/ArduinoCode.ini` variables (Wifi, Node ip, etc..)
 
 ## Start server
 - Initially install dependencies by running ```npm install```
@@ -13,18 +13,17 @@ Control multiple light strips each on their own ESP8266. Supports OTA updates.
 
 ## Exporting Arduino Code
   
-  1. Copy the ArduinoCode folder (found in src/) into the dist folder after your have run `npm start`
-  2. Open up dist/ArduinoCode/ArduinoCode.ini in Arduino Sketch
-  3. Verify/Compile the code. ```(Sketch->Verify/Compile)```
-  4. Export compiled binary. ```(Sketch->Export Compiled Binary)```
-  5. The new compiled code is now ready to be pulled for updates.
+  1. Open up dist/ArduinoCode/ArduinoCode.ini in Arduino Sketch
+  2. Verify/Compile the code. ```(Sketch->Verify/Compile)```
+  3. Export compiled binary. ```(Sketch->Export Compiled Binary)```
+  4. The new compiled code is now ready to be pulled for updates.
 
 ## Current way of updating (Still in the works)
 
 * OTA Update Setup
   - **IMPORTANT STEP** - Kill Node Server
   - Plug in ESP8266
-  - Open up src/ArduinoCode/ArduinoCode.ini in Arduino Sketch
+  - Open up dist/ArduinoCode/ArduinoCode.ini in Arduino Sketch
   - Upload Code to the ESP8266 via USB and Arduino Sketch.
   - **IMPORTANT STEP** - Once upload is finished press the reset button on the ESP8266.
   - Your device may be unplugged and is ready for OTA updates.
