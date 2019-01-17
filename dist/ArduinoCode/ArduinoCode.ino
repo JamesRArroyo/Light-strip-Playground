@@ -46,7 +46,7 @@ const int mqtt_port = 1883;
 #define SENSORNAME "stripRoss" //change this to whatever you want to call your device
 
 /* HTTP Server OTA */
-const int FW_VERSION = 0006; // increment this on each update.
+const int FW_VERSION = 04; // increment this on each update.
 const char* fwUrlBase = "http://192.168.1.118:8266/update_firmware/"; // Url to the http server that will provide update.
 
 
@@ -71,7 +71,7 @@ const int BUFFER_SIZE = JSON_OBJECT_SIZE(10);
 
 
 /*********************************** FastLED Defintions ********************************/
-#define NUM_LEDS    20
+#define NUM_LEDS    50
 #define DATA_PIN    5
 #define AOUT_PIN    2
 #define DOUT_PIN    4
@@ -185,9 +185,7 @@ struct CRGB leds[NUM_LEDS];
 
 
 void allWhite() {
-  for (int i = 0; i < NUM_LEDS; i++) {
-    leds[i] = CRGB(255, 255, 235);
-  }
+  leds[0] = CRGB(255, 255, 235);
   delay(5);
   FastLED.show();
 }
@@ -214,7 +212,7 @@ void setup() {
   checkForUpdates();
 
   Serial.println("DONE CHECKING FOR UPDATES!!!");
-
+  allWhite();
 }
 
 
