@@ -1,5 +1,5 @@
-/dist
-!/dist/ArduinoCode/
+dist/*
+!dist/ArduinoCode/
 /node_modules
 /Exports
 /Temp_PDFs
