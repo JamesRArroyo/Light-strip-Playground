@@ -33,8 +33,8 @@
 
 
 /************ WIFI and MQTT Information (CHANGE THESE FOR YOUR SETUP) ******************/
-const char* ssid = "Virus"; //type your WIFI information inside the quotes
-const char* password = "w3lcom3123";
+const char* ssid = "printer"; //type your WIFI information inside the quotes
+const char* password = "magnolia";
 const char* mqtt_server = "192.168.1.118";
 const char* mqtt_username = "admin";
 const char* mqtt_password = "password";
@@ -46,7 +46,7 @@ const int mqtt_port = 1883;
 #define SENSORNAME "stripRoss" //change this to whatever you want to call your device
 
 /* HTTP Server OTA */
-const int FW_VERSION = 04; // increment this on each update.
+const int FW_VERSION = 14; // increment this on each update.
 const char* fwUrlBase = "http://192.168.1.118:8266/update_firmware/"; // Url to the http server that will provide update.
 
 
@@ -184,8 +184,26 @@ struct CRGB leds[NUM_LEDS];
 
 
 
-void allWhite() {
+void oneWhite() {
   leds[0] = CRGB(255, 255, 235);
+  delay(5);
+  FastLED.show();
+}
+
+void oneGreen() {
+  leds[0] = CRGB(0, 255, 0);
+  delay(5);
+  FastLED.show();
+}
+
+void oneRed() {
+  leds[0] = CRGB(255, 0, 0);
+  delay(5);
+  FastLED.show();
+}
+
+void oneBlue() {
+  leds[0] = CRGB(0, 0, 255);
   delay(5);
   FastLED.show();
 }
@@ -208,11 +226,22 @@ void setup() {
   Serial.println("Ready");
   Serial.print("IP Address: ");
   Serial.println(WiFi.localIP());
+  Serial.print("MAC: ");
+  Serial.println(WiFi.macAddress());
 
   checkForUpdates();
 
   Serial.println("DONE CHECKING FOR UPDATES!!!");
-  allWhite();
+  
+  String mac = WiFi.macAddress();
+  if (mac == "CC:50:E3:0A:18:7B") {
+    oneGreen();
+  } else if (mac == "84:0D:8E:83:13:6C") {
+    oneBlue();
+  } else {
+    oneRed();
+  }
+  
 }
 
 
