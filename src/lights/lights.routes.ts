@@ -81,9 +81,18 @@ export class Lights {
 
     app.route('/topics').get((req: Request, res: Response) => {
       const topicGroups = [
-        {name: 'ALL', topics: ['stage/left/elevator/elevator1', 'stage/left/elevator/elevator2', 'stage/right/clock/clock3']},
-        {name: 'Elevator', topics: ['stage/left/elevator/elevator1', 'stage/left/elevator/elevator2']},
-        {name: 'Clock', topics: ['stage/right/clock/clock3']}
+        {name: 'ALL', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3',
+         'lights/stageleft/mail/border/light4', 'lights/stageleft/elevator/opening/light5', 'lights/stageright/elevator/opening/light6',
+          'lights/stageright/mail/border/light7', 'lights/stageright/mail/box/light8', 'lights/stageright/mail/box/light9',
+        'lights/stageright/mail/border/light10', 'testing/light17']},
+        {name: 'Mail', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3',
+        'lights/stageleft/mail/border/light4', 'lights/stageright/mail/border/light7', 'lights/stageright/mail/box/light8', 'lights/stageright/mail/box/light9',
+       'lights/stageright/mail/border/light10']},
+        {name: 'Mail Box', topics: ['lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3','lights/stageright/mail/box/light8',
+         'lights/stageright/mail/box/light9']},
+        {name: 'Mail Border', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/border/light4', 'lights/stageright/mail/border/light7',
+       'lights/stageright/mail/border/light10']},
+        {name: 'Elevator', topics: ['lights/stageleft/elevator/opening/light5', 'lights/stageright/elevator/opening/light6']}
       ];
       res.send(topicGroups)
     })
