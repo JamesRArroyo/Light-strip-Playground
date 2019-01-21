@@ -1,17 +1,20 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { FirmwareUpdates } from "./firmwareUpdate/firmwareUpdate.routes";
+import { Lights } from './lights/lights.routes';
 
 class App {
 
     public app: express.Application;
     public firmwareUpdateRoutes: FirmwareUpdates = new FirmwareUpdates();
+    public lightRoutes: Lights = new Lights();
 
     constructor() {
         this.app = express();
         this.config();
 
         this.firmwareUpdateRoutes.routes(this.app);
+        this.lightRoutes.routes(this.app);
     }
 
     private config(): void {

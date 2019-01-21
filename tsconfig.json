@@ -6,7 +6,8 @@
       "resolveJsonModule": true //to import out json database
     },
     "include": [
-      "src/**/*.ts"      //which kind of files to compile
+      "src/**/*.ts",      //which kind of files to compile
+      "src/**/*.html"      //which kind of files to compile
     ],
     "exclude": [
       "node_modules"     //which files or directories to ignore
