@@ -7,9 +7,17 @@ Control multiple light strips each on their own ESP8266. Supports OTA updates.
 - Install Node.js® and npm if they are not already on your machine.
 - Update `dist/ArduinoCode/ArduinoCode.ini` variables (Wifi, Node ip, etc..)
 
-## Start server
+## Start Servers
+### Mosca (MQTT Broker)
+- From the mosca folder run ```mosca -V | bunyan```
+
+### Node (Updates / MQTT communicator)
 - Initially install dependencies by running ```npm install```
 - Run `npm start` to spin up the node server.
+
+### Angular (Front End Controller)
+- Navigate to the ng-light-show folder and run ```npm install```
+- `ng serve` to start the app found on `localhost:4200`
 
 ## Exporting Arduino Code
   
