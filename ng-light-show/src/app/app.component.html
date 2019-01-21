@@ -1,0 +1,20 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+
+<mat-accordion multi="true">
+  <mat-expansion-panel *ngFor="let group of topicGroups">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{group.name}}
+      </mat-panel-title>
+      <mat-panel-description>
+        <app-light-board [topics]=group.topics></app-light-board>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-light-board *ngFor="let topic of group.topics" [topics]="topic"></app-light-board>
+  </mat-expansion-panel>
+</mat-accordion>

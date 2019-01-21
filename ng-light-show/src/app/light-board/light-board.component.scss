@@ -1,0 +1,80 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: center;
+}
+
+.topic {
+  grid-column: 1;
+  display: grid;
+
+  .name {
+    grid-row: 1;
+  }
+
+  .full-topic {
+    grid-row: 2;
+    font-size: 10px;
+  }
+}
+
+.brightness {
+  grid-column: 2 / span 1;
+}
+
+.colors {
+  grid-column: 4 / span 4;
+}
+
+.effects {
+  grid-column: 8 / span 2;
+}
+
+.real-time-brightness {
+  grid-column: 10 / span 2;
+}
+
+
+
+
+::ng-deep .mat-expansion-panel-body {
+  background-color: #dad9d9 !important;
+}
+
+::ng-deep .mat-expansion-panel-header {
+  height: 80px !important;
+}
+
+::ng-deep .mat-content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+button {
+  margin-left:10px;
+}
+
+.button-off {
+  background-color: black;
+  color: white;
+}
+.button-blue {
+  background-color: #3b3bf5
+}
+
+.button-green {
+  background-color: green;
+}
+
+.button-red {
+  background-color: red;
+}
+
+.button-aqua {
+  background-color: aqua;
+}
+
+.button-white {
+  background-color: white;
+}

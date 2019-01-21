@@ -1,0 +1,31 @@
+<div class="wrapper">
+  <div class="topic">
+    <div class="name">{{getTopicName(true)}}</div>
+    <div class="full-topic">{{getTopicName(false)}}</div>
+    </div>
+  <div class="brightness">
+    <mat-slider (input)="setBrightness($event)"  [value]="brightness" thumbLabel="true" [displayWith]="formatLabel" tickInterval="10" min="1" max="255"></mat-slider>
+  </div>
+  <div class="colors">
+    <button mat-raised-button class="button-off" (click)="lightsOff()">OFF</button>
+    <button mat-raised-button class="button-blue" (click)="controlLights('blue')">Blue</button>
+    <button mat-raised-button class="button-green" (click)="controlLights('green')">Green</button>
+    <button mat-raised-button class="button-red" (click)="controlLights('red')">Red</button>
+    <button mat-raised-button class="button-aqua" (click)="controlLights('aqua')">Aqua</button>
+    <button mat-raised-button class="button-white" (click)="controlLights('white')">White</button>
+  </div>
+  <div class="effects">
+    <mat-form-field>
+      <mat-select placeholder="Effect" (selectionChange)="setEffect($event)">
+        <mat-option *ngFor="let effect of effects" [value]="effect">
+          {{effect}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="real-time-brightness">
+    <mat-slider (input)="setBrightnessRealTime($event)"  [value]="realTimeBrightness" thumbLabel="true" [displayWith]="formatLabel" tickInterval="50" min="0" max="255"></mat-slider>
+  </div>
+
+</div>
