@@ -6,7 +6,7 @@ import * as mqtt from 'mqtt';
 
 export class FirmwareUpdates {
 
-    firmwareVersionNumber:string = '25'
+    firmwareVersionNumber:string = '31'
 
     public routes(app): void {
 

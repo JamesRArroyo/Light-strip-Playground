@@ -6,133 +6,91 @@ import * as mqtt from 'mqtt';
 
 export class Lights {
 
-    public routes(app): void {
+  public routes(app): void {
 
 
-        app.route('/').get((req: Request, res: Response) => {
-            res.sendFile(path.join(__dirname+'/index.html'));
-        })
+    app.route('/').get((req: Request, res: Response) => {
+      res.sendFile(path.join(__dirname + '/index.html'));
+    })
 
-        app.route('/test-mqtt-blue').get((req: Request, res: Response) => {
-            var client = mqtt.connect('http://localhost:1883')
+    app.route('/control-lights').get((req: Request, res: Response) => {
+      var client = mqtt.connect('http://localhost:1883')
+      console.log(req.query)
+      let topics = [];
+      let lightConfig = {
+        state: '',
+        color: { r: 0, g: 0, b: 255 },
+        brightness: '',
+        effect: 'solid'
+      };
 
-            client.on('connect', () => {
-                client.subscribe('bruh/porch', (err) => {
-                    if (!err) {
-                        console.log('publishing msg...')
-                        const msg = '{"state":"ON","color":{"r":0,"g":0,"b":255},"brightness":255,"effect":"solid"}'
-                        client.publish('bruh/porch/set', msg)
-                    } else {
-                        console.log(err);
-                    }
-                })
-            })
+      if (req.query.topics) {
+        topics = req.query.topics.split(', ');
+      }
 
-            res.redirect('http://localhost:1883/')
-        })
+      if (req.query.state) {
+        lightConfig.state = req.query.state;
+      }
+      
+      if (req.query.brightness) {
+        lightConfig.brightness = req.query.brightness;
+      }
 
-        app.route('/test-mqtt-green').get((req: Request, res: Response) => {
-            var client = mqtt.connect('http://localhost:1883')
-
-            client.on('connect', () => {
-                client.subscribe('bruh/porch', (err) => {
-                    if (!err) {
-                        console.log('publishing msg...')
-                        const msg = '{"state":"ON","color":{"r":0,"g":255,"b":0},"brightness":255,"effect":"solid"}'
-                        client.publish('bruh/porch/set', msg)
-                    } else {
-                        console.log(err);
-                    }
-                })
-            })
-
-            res.redirect('http://localhost:1883/')
-        })
-
-        app.route('/test-mqtt-red').get((req: Request, res: Response) => {
-            var client = mqtt.connect('http://localhost:1883')
-
-            client.on('connect', () => {
-                client.subscribe('bruh/porch', (err) => {
-                    if (!err) {
-                        console.log('publishing msg...')
-                        const msg = '{"state":"ON","color":{"r":255,"g":0,"b":0},"brightness":255,"effect":"solid"}'
-                        client.publish('bruh/porch/set', msg)
-                    } else {
-                        console.log(err);
-                    }
-                })
-            })
-
-            res.redirect('http://localhost:1883/')
-        })
+      if (req.query.color) {
+        const color = req.query.color;
+        if (color === 'red') {
+          lightConfig.color = { r: 255, g: 0, b: 0 };
+        } else if (color === 'green') {
+          lightConfig.color = { r: 0, g: 255, b: 0 };
+        } else if (color === 'blue') {
+          lightConfig.color = { r: 0, g: 0, b: 255 };
+        } else if (color === 'aqua') {
+          lightConfig.color = { r: 0, g: 255, b: 255 };
+        } else if (color === 'white') {
+          lightConfig.color = { r: 255, g: 255, b: 255 };
+        }
+      }
 
 
-        app.route('/mqtt-list-clients').get((req: Request, res: Response) => {
-            var client = mqtt.connect('http://localhost:1883')
+      let msg = JSON.stringify(lightConfig);
+      console.log(topics);
+      console.log(msg);
+      client.on('connect', () => {
+        topics.forEach(topic => {
+          client.subscribe(topic, (err) => {
+            if (!err) {
+              console.log('publishing msg...')
+              client.publish(topic, msg)
+            } else {
+              console.log(err);
+            }
+          });
+        });
 
-            client.on('connect', function() { // Check you have a connection
-                // Subscribe to a Topic
-                    client.subscribe("bruh/porch", function(e, m) {
-                        console.log('Subscribed ', e, m);
-                        client.on('message', function(topic, message, packet) {
-                            
-                        console.log(topic);
-                        console.log(message);
-                        console.log(packet);
-                                
-                        });
-                    });
-                });
-                
-                client.on('reconnect', () => {
-                    console.log('Reconnecting-----------');
-                 })
-                client.on('close', () => {
-                    console.log('Closing client');
-                })
-                client.on('offline', () => {
-                    console.log('Client is gone offline');
-                });
-                
-                client.on('error', (e) => {
-                    console.log('Error in connecting to mqtt broker ', e);
-                    client.end();
-                })
+      })
 
-            res.send('http://localhost:1883/')
-        })
-
-        app.route('/update_firmware')
-            .all((req, res, next) => {
-                const user_agent = req.headers['user-agent']
-                console.log('Time: ', Date.now())
-                console.log("User-Agent:" + user_agent);
-                next()
-            })
-            .get((req: Request, res: Response) => {
-                console.log('Starting Update')
-
-                const path_to_file = path.resolve(__dirname, "../ArduinoCode/ArduinoCode.ino.nodemcu.bin")
-                fs.readFile(path_to_file, "binary", (error: Error, data: string | Buffer) => {
-                    if (error) {
-                        console.log(error)
-                        res.writeHead(500, { "Content-Type": "text/plain" });
-                        res.write(error + "\n");
-                        res.end();
-                        return;
-                    }
+      res.send('DONE!')
+    })
 
 
-                    console.log('Sending Update...')
-                    //Get File Size
-                    var stats = fs.statSync(path_to_file);
-                    res.setHeader("Content-Type", "text/html");
-                    res.setHeader("Content-Disposition", "attachment");
-                    res.setHeader("Content-Length", stats.size.toString());
-                    res.write(data, "binary");
-                    res.end();
-                })
-            })
-    }
+
+    app.route('/topics').get((req: Request, res: Response) => {
+      const topicGroups = [
+        {name: 'ALL', topics: ['stage/left/elevator/elevator1', 'stage/left/elevator/elevator2', 'stage/right/clock/clock3']},
+        {name: 'Elevator', topics: ['stage/left/elevator/elevator1', 'stage/left/elevator/elevator2']},
+        {name: 'Clock', topics: ['stage/right/clock/clock3']}
+      ];
+      res.send(topicGroups)
+    })
+
+
+
+
+
+
+
+   
+ 
+
+  }
 }
