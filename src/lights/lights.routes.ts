@@ -21,7 +21,7 @@ export class Lights {
         state: '',
         color: { r: 0, g: 0, b: 255 },
         brightness: '',
-        effect: 'solid'
+        effect: ''
       };
 
       if (req.query.topics) {
@@ -34,6 +34,10 @@ export class Lights {
       
       if (req.query.brightness) {
         lightConfig.brightness = req.query.brightness;
+      }
+
+      if (req.query.effect) {
+        lightConfig.effect = req.query.effect;
       }
 
       if (req.query.color) {
