@@ -46,7 +46,7 @@ const int mqtt_port = 1883;
 #define SENSORNAME "stripRoss" //change this to whatever you want to call your device
 
 /* HTTP Server OTA */
-const int FW_VERSION = 28; // increment this on each update.
+const int FW_VERSION = 32; // increment this on each update.
 const char* fwUrlBase = "http://192.168.1.118:8266/update_firmware/"; // Url to the http server that will provide update.
 
 
