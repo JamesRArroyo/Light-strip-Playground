@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
 import * as fs from 'fs';
 import * as path from 'path';
-import * as mqtt from 'mqtt';
 
 
 export class FirmwareUpdates {
+    firmwareVersionNumber:string = '32'
 
-    firmwareVersionNumber:string = '31'
 
     public routes(app): void {
 

@@ -46,7 +46,7 @@ const int mqtt_port = 1883;
 #define SENSORNAME "stripRoss" //change this to whatever you want to call your device
 
 /* HTTP Server OTA */
-const int FW_VERSION = 25; // increment this on each update.
+const int FW_VERSION = 28; // increment this on each update.
 const char* fwUrlBase = "http://192.168.1.118:8266/update_firmware/"; // Url to the http server that will provide update.
 
 
@@ -73,8 +73,8 @@ const int BUFFER_SIZE = JSON_OBJECT_SIZE(10);
 /*********************************** FastLED Defintions ********************************/
 byte Light_ID = 0;
 
-int NUM_LEDSX = 50;
-#define NUM_LEDS    50
+int NUM_LEDSX = 200;
+#define NUM_LEDS    200
 #define DATA_PIN    5
 #define AOUT_PIN    2
 #define DOUT_PIN    4
@@ -256,13 +256,112 @@ void setup_board_params() {
   String mac = WiFi.macAddress();
 
   if (mac == "84:0D:8E:83:13:6C") {
-     Light_ID = 16;
-     Serial.print("I want to be 16 and am actually ");
+     Light_ID = 1;
+     Serial.print("I want to be 1 and am actually ");
      Serial.println(Light_ID);
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     NUM_LEDSX = 116;
-     light_set_topic = "ross/light16";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/stageleft/mail/border/light1";
+     Serial.print("My topic is ");
+     Serial.println(light_set_topic);
+    return;
+  }else if (mac == "84:0D:8E:83:11:E3")  {
+     Light_ID = 2;
+     Serial.print("I want to be 3 and am actually ");
+     Serial.println(Light_ID);
+     NUM_LEDSX = 150;
+     Serial.print("num of LEDs is ");
+     Serial.print(NUM_LEDSX);
+     light_set_topic = "lights/stageleft/mail/box/light2";
+     Serial.print("My topic is ");
+     Serial.println(light_set_topic);
+    return;
+  }else if (mac == "84:0D:8E:83:12:52")  {
+     Light_ID = 3;
+     Serial.print("I want to be 3 and am actually ");
+     Serial.println(Light_ID);
+     NUM_LEDSX = 150;
+     Serial.print("num of LEDs is ");
+     Serial.print(NUM_LEDSX);
+     light_set_topic = "lights/stageleft/mail/box/light3";
+     Serial.print("My topic is ");
+     Serial.println(light_set_topic);
+    return;
+  }else if (mac == "84:F3:EB:B6:FA:A0")  {
+     Light_ID = 4;
+     Serial.print("I want to be 4 and am actually ");
+     Serial.println(Light_ID);
+     NUM_LEDSX = 50;
+     Serial.print("num of LEDs is ");
+     Serial.print(NUM_LEDSX);
+     light_set_topic = "lights/stageleft/mail/border/light4";
+     Serial.print("My topic is ");
+     Serial.println(light_set_topic);
+    return;
+  }else if (mac == "84:0D:8E:83:12:E4")  {
+     Light_ID = 5;
+     Serial.print("I want to be 5 and am actually ");
+     Serial.println(Light_ID);
+     NUM_LEDSX = 50;
+     Serial.print("num of LEDs is ");
+     Serial.print(NUM_LEDSX);
+     light_set_topic = "lights/stageleft/elevator/opening/light5";
+     Serial.print("My topic is ");
+     Serial.println(light_set_topic);
+    return;
+  }else if (mac == "84:0D:8E:83:13:E1")  {
+     Light_ID = 6;
+     Serial.print("I want to be 6 and am actually ");
+     Serial.println(Light_ID);
+     NUM_LEDSX = 50;
+     Serial.print("num of LEDs is ");
+     Serial.print(NUM_LEDSX);
+     light_set_topic = "lights/stageright/elevator/opening/light6";
+     Serial.print("My topic is ");
+     Serial.println(light_set_topic);
+    return;
+  }else if (mac == "CC:50:E3:4A:58:32")  {
+     Light_ID = 7;
+     Serial.print("I want to be 7 and am actually ");
+     Serial.println(Light_ID);
+     NUM_LEDSX = 50;
+     Serial.print("num of LEDs is ");
+     Serial.print(NUM_LEDSX);
+     light_set_topic = "lights/stageright/mail/border/light7";
+     Serial.print("My topic is ");
+     Serial.println(light_set_topic);
+    return;
+  }else if (mac == "CC:50:E3:4A:50:E0")  {
+     Light_ID = 8;
+     Serial.print("I want to be 8 and am actually ");
+     Serial.println(Light_ID);
+     NUM_LEDSX = 150;
+     Serial.print("num of LEDs is ");
+     Serial.print(NUM_LEDSX);
+     light_set_topic = "lights/stageright/mail/box/light8";
+     Serial.print("My topic is ");
+     Serial.println(light_set_topic);
+    return;
+  }else if (mac == "84:0D:8E:83:06:76")  {
+     Light_ID = 9;
+     Serial.print("I want to be 9 and am actually ");
+     Serial.println(Light_ID);
+     NUM_LEDSX = 150;
+     Serial.print("num of LEDs is ");
+     Serial.print(NUM_LEDSX);
+     light_set_topic = "lights/stageright/mail/box/light9";
+     Serial.print("My topic is ");
+     Serial.println(light_set_topic);
+    return;
+  }else if (mac == "CC:50:E3:4A:4F:7F")  {
+     Light_ID = 10;
+     Serial.print("I want to be 10 and am actually ");
+     Serial.println(Light_ID);
+     NUM_LEDSX = 50;
+     Serial.print("num of LEDs is ");
+     Serial.print(NUM_LEDSX);
+     light_set_topic = "lights/stageright/mail/border/light10";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -273,7 +372,7 @@ void setup_board_params() {
      NUM_LEDSX = 117;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "ross/light17";
+     light_set_topic = "testing/light17";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
