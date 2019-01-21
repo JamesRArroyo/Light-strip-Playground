@@ -3,6 +3,7 @@ dist/*
 /node_modules
 /Exports
 /Temp_PDFs
+/ng-light-show/node_modules
 
 # IDE - VSCode
 .vscode/*
