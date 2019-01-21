@@ -73,7 +73,8 @@ export class Lights {
 
       })
 
-      res.send('DONE!')
+      res.status(200).send({'message': 'done!'});
+
     })
 
 
