@@ -46,13 +46,13 @@ const int mqtt_port = 1883;
 #define SENSORNAME "stripRoss" //change this to whatever you want to call your device
 
 /* HTTP Server OTA */
-const int FW_VERSION = 14; // increment this on each update.
+const int FW_VERSION = 25; // increment this on each update.
 const char* fwUrlBase = "http://192.168.1.118:8266/update_firmware/"; // Url to the http server that will provide update.
 
 
 /************* MQTT TOPICS (change these topics as you wish)  **************************/
 const char* light_state_topic = "bruh/porch";
-const char* light_set_topic = "bruh/porch/set";
+char* light_set_topic = "bruh/porch/set";
 const char* sound_sensor = "bruh/sound";
 
 const char* on_cmd = "ON";
@@ -71,6 +71,9 @@ const int BUFFER_SIZE = JSON_OBJECT_SIZE(10);
 
 
 /*********************************** FastLED Defintions ********************************/
+byte Light_ID = 0;
+
+int NUM_LEDSX = 50;
 #define NUM_LEDS    50
 #define DATA_PIN    5
 #define AOUT_PIN    2
@@ -212,6 +215,9 @@ void oneBlue() {
 /********************************** START SETUP*****************************************/
 void setup() {
   Serial.begin(115200);
+  Serial.print("My big MAC: ");
+  Serial.println(WiFi.macAddress());
+  setup_board_params();
   FastLED.addLeds<CHIPSET, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
   pinMode(AOUT_PIN, INPUT); //  The analog pin for the sound board on the arduino
   
@@ -219,6 +225,8 @@ void setup() {
   gPal = HeatColors_p; //for FIRE
 
   setup_wifi();
+ 
+
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
 
@@ -226,17 +234,16 @@ void setup() {
   Serial.println("Ready");
   Serial.print("IP Address: ");
   Serial.println(WiFi.localIP());
-  Serial.print("MAC: ");
-  Serial.println(WiFi.macAddress());
+
 
   checkForUpdates();
 
   Serial.println("DONE CHECKING FOR UPDATES!!!");
-  
-  String mac = WiFi.macAddress();
-  if (mac == "CC:50:E3:0A:18:7B") {
+  Serial.print("My Light ID: ");
+  Serial.println(Light_ID);
+  if (Light_ID == 16) {
     oneGreen();
-  } else if (mac == "84:0D:8E:83:13:6C") {
+  } else if (Light_ID == 17) {
     oneBlue();
   } else {
     oneRed();
@@ -245,9 +252,43 @@ void setup() {
 }
 
 
+void setup_board_params() {
+  String mac = WiFi.macAddress();
+
+  if (mac == "84:0D:8E:83:13:6C") {
+     Light_ID = 16;
+     Serial.print("I want to be 16 and am actually ");
+     Serial.println(Light_ID);
+     Serial.print("num of LEDs is ");
+     Serial.print(NUM_LEDSX);
+     NUM_LEDSX = 116;
+     light_set_topic = "ross/light16";
+     Serial.print("My topic is ");
+     Serial.println(light_set_topic);
+    return;
+  }else if (mac == "CC:50:E3:0A:18:7B")  {
+     Light_ID = 17;
+     Serial.print("I want to be 17 and am actually ");
+     Serial.println(Light_ID);
+     NUM_LEDSX = 117;
+     Serial.print("num of LEDs is ");
+     Serial.print(NUM_LEDSX);
+     light_set_topic = "ross/light17";
+     Serial.print("My topic is ");
+     Serial.println(light_set_topic);
+    return;
+  }else {
+    Serial.print("Failed to set board Params");
+    Serial.print("I dont know who I am ");
+    Serial.println(Light_ID);
+  }   
+Serial.print("For Giggles My ID is ");
+Serial.println(Light_ID);
+}
+
 /********************************** CHECK FOR UPDATES (OTA) *****************************************/
 void checkForUpdates() {
-  String mac = getMAC();
+  String mac = WiFi.macAddress();
   String fwURL = String( fwUrlBase );
   String fwVersionURL = fwURL;
   fwVersionURL.concat( "version" );
