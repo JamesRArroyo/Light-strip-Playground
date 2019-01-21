@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as fs from 'fs';
 import * as path from 'path';
+import * as mqtt from 'mqtt';
 
 
 export class FirmwareUpdates {
@@ -12,6 +13,7 @@ export class FirmwareUpdates {
         app.route('/update_firmware/version').get((req: Request, res: Response) => {
             res.status(200).send(this.firmwareVersionNumber);
         })
+
 
         app.route('/update_firmware')
             .all((req, res, next) => {
