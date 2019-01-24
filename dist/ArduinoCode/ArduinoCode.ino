@@ -46,7 +46,7 @@ const int mqtt_port = 1883;
 char* sensor_name = "stripRoss"; //change this to whatever you want to call your device
 
 /* HTTP Server OTA */
-const int FW_VERSION = 34; // increment this on each update.
+const int FW_VERSION = 38; // increment this on each update.
 const char* fwUrlBase = "http://192.168.1.118:8266/update_firmware/"; // Url to the http server that will provide update.
 
 
@@ -189,14 +189,19 @@ struct CRGB leds[NUM_LEDS];
 
 void oneWhite() {
   leds[0] = CRGB(255, 255, 235);
-  delay(5);
+  FastLED.show();
+}
+
+void oneOrange() {
+  leds[0] = CRGB(255, 69, 0);
   FastLED.show();
 }
 
 void oneGreen() {
   leds[0] = CRGB(0, 255, 0);
-  delay(5);
   FastLED.show();
+  delay(5000);
+  FastLED.clear();
 }
 
 void oneRed() {
@@ -238,17 +243,6 @@ void setup() {
 
   checkForUpdates();
 
-  Serial.println("DONE CHECKING FOR UPDATES!!!");
-  Serial.print("My Light ID: ");
-  Serial.println(Light_ID);
-  if (Light_ID == 16) {
-    oneGreen();
-  } else if (Light_ID == 17) {
-    oneBlue();
-  } else {
-    oneRed();
-  }
-  
 }
 
 
@@ -404,6 +398,7 @@ Serial.println(Light_ID);
 
 /********************************** CHECK FOR UPDATES (OTA) *****************************************/
 void checkForUpdates() {
+  oneWhite();
   String mac = WiFi.macAddress();
   String fwURL = String( fwUrlBase );
   String fwVersionURL = fwURL;
@@ -430,6 +425,7 @@ void checkForUpdates() {
     int newVersion = newFWVersion.toInt();
 
     if( newVersion > FW_VERSION ) {
+      oneOrange();
       Serial.println( "Preparing to update" );
 
       String fwImageURL = fwURL;
@@ -447,6 +443,7 @@ void checkForUpdates() {
       }
     }
     else {
+      oneGreen();
       Serial.println( "Already on latest version" );
     }
   }
@@ -754,6 +751,8 @@ void loop() {
   Serial.println(analogValue);// prints the CO value
   delay(60000);
   */
+
+
   //EFFECT BPM
   if (effectString == "bpm") {
     uint8_t BeatsPerMinute = 62;
