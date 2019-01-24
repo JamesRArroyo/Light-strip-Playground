@@ -43,10 +43,10 @@ const int mqtt_port = 1883;
 
 
 /**************************** FOR OTA **************************************************/
-#define SENSORNAME "stripRoss" //change this to whatever you want to call your device
+char* sensor_name = "stripRoss"; //change this to whatever you want to call your device
 
 /* HTTP Server OTA */
-const int FW_VERSION = 32; // increment this on each update.
+const int FW_VERSION = 34; // increment this on each update.
 const char* fwUrlBase = "http://192.168.1.118:8266/update_firmware/"; // Url to the http server that will provide update.
 
 
@@ -261,6 +261,7 @@ void setup_board_params() {
      Serial.println(Light_ID);
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
+     sensor_name = "light1";
      NUM_LEDSX = 50;
      light_set_topic = "lights/stageleft/mail/border/light1";
      Serial.print("My topic is ");
@@ -270,6 +271,7 @@ void setup_board_params() {
      Light_ID = 2;
      Serial.print("I want to be 3 and am actually ");
      Serial.println(Light_ID);
+     sensor_name = "light2";
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
@@ -281,6 +283,7 @@ void setup_board_params() {
      Light_ID = 3;
      Serial.print("I want to be 3 and am actually ");
      Serial.println(Light_ID);
+     sensor_name = "light3";
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
@@ -292,6 +295,7 @@ void setup_board_params() {
      Light_ID = 4;
      Serial.print("I want to be 4 and am actually ");
      Serial.println(Light_ID);
+     sensor_name = "light4";
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
@@ -303,6 +307,7 @@ void setup_board_params() {
      Light_ID = 5;
      Serial.print("I want to be 5 and am actually ");
      Serial.println(Light_ID);
+     sensor_name = "light5";
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
@@ -314,6 +319,7 @@ void setup_board_params() {
      Light_ID = 6;
      Serial.print("I want to be 6 and am actually ");
      Serial.println(Light_ID);
+     sensor_name = "light6";
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
@@ -325,6 +331,7 @@ void setup_board_params() {
      Light_ID = 7;
      Serial.print("I want to be 7 and am actually ");
      Serial.println(Light_ID);
+     sensor_name = "light7";
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
@@ -336,6 +343,7 @@ void setup_board_params() {
      Light_ID = 8;
      Serial.print("I want to be 8 and am actually ");
      Serial.println(Light_ID);
+     sensor_name = "light8";
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
@@ -347,6 +355,7 @@ void setup_board_params() {
      Light_ID = 9;
      Serial.print("I want to be 9 and am actually ");
      Serial.println(Light_ID);
+     sensor_name = "light9";
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
@@ -358,6 +367,7 @@ void setup_board_params() {
      Light_ID = 10;
      Serial.print("I want to be 10 and am actually ");
      Serial.println(Light_ID);
+     sensor_name = "light10";
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
@@ -369,12 +379,19 @@ void setup_board_params() {
      Light_ID = 17;
      Serial.print("I want to be 17 and am actually ");
      Serial.println(Light_ID);
+     sensor_name = "light17";
      NUM_LEDSX = 117;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
      light_set_topic = "testing/light17";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
+    return;
+    }else if (mac == "84:0D:8E:83:03:44")  {
+     Light_ID = 7;
+     sensor_name = "strip1";
+     NUM_LEDSX = 117;
+     light_set_topic = "jimmy/strip1";
     return;
   }else {
     Serial.print("Failed to set board Params");
@@ -677,7 +694,7 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect(SENSORNAME, mqtt_username, mqtt_password)) {
+    if (client.connect(sensor_name, mqtt_username, mqtt_password)) {
       Serial.println("connected");
       client.subscribe(light_set_topic);
       setColor(0, 0, 0);
