@@ -13,6 +13,13 @@ export class Lights {
       res.sendFile(path.join(__dirname + '/index.html'));
     })
 
+    app.route('/lights/log').post((req: Request, res: Response) => {
+      console.log('**********************')
+      console.log(req.body);
+      res.status(200).send({'message': 'done!'});
+    })
+
+
     app.route('/control-lights').get((req: Request, res: Response) => {
       var client = mqtt.connect('http://localhost:1883')
       console.log(req.query)
@@ -55,23 +62,20 @@ export class Lights {
         }
       }
 
-
+      let options = { qos:0};
       let msg = JSON.stringify(lightConfig);
       console.log(topics);
       console.log(msg);
       client.on('connect', () => {
         topics.forEach(topic => {
-          client.subscribe(topic, (err) => {
-            if (!err) {
-              console.log('publishing msg...')
-              client.publish(topic, msg)
-            } else {
-              console.log(err);
-            }
-          });
+          const topicObj = {};
+          topicObj[topic] = 0;
+          client.publish(topic, msg, {qos: 1})
         });
 
       })
+
+      
 
       res.status(200).send({'message': 'done!'});
 
@@ -84,7 +88,7 @@ export class Lights {
         {name: 'ALL', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3',
          'lights/stageleft/mail/border/light4', 'lights/stageleft/elevator/opening/light5', 'lights/stageright/elevator/opening/light6',
           'lights/stageright/mail/border/light7', 'lights/stageright/mail/box/light8', 'lights/stageright/mail/box/light9',
-        'lights/stageright/mail/border/light10', 'testing/light17']},
+        'lights/stageright/mail/border/light10', 'testing/light17', 'lights/light11', 'lights/light20', 'lights/light19']},
         {name: 'Mail', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3',
         'lights/stageleft/mail/border/light4', 'lights/stageright/mail/border/light7', 'lights/stageright/mail/box/light8', 'lights/stageright/mail/box/light9',
        'lights/stageright/mail/border/light10']},

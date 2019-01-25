@@ -14,7 +14,7 @@ export class LightBoardComponent implements OnInit {
   activeColor = 'white';
   activeEffect = 'solid';
   effects = ['solid', 'bpm', 'candy cane', 'confetti', 'cyclon rainbow', 'dots', 'fire', 'glitter', 'juggle', 'lightning',
-   'police all', 'police one', 'rainbow', 'rainbow with glitter', 'sinelon', 'twinkle', 'noise', 'ripple']
+   'police all', 'police one', 'rainbow', 'rainbow with glitter', 'sinelon', 'twinkle', 'noise', 'ripple', 'update']
 
   constructor(private lightService: LightService) { }
 

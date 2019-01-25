@@ -46,8 +46,8 @@ const int mqtt_port = 1883;
 char* sensor_name = "stripRoss"; //change this to whatever you want to call your device
 
 /* HTTP Server OTA */
-const int FW_VERSION = 38; // increment this on each update.
-const char* fwUrlBase = "http://192.168.1.118:8266/update_firmware/"; // Url to the http server that will provide update.
+const int FW_VERSION = 55; // increment this on each update.
+const char* fwUrlBase = "http://192.168.1.118:8266/"; // Url to the http server that will provide update.
 
 
 /************* MQTT TOPICS (change these topics as you wish)  **************************/
@@ -321,7 +321,7 @@ void setup_board_params() {
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
-  }else if (mac == "CC:50:E3:4A:58:32")  {
+  }else if (mac == "CC:50:E3:4A:4B:1E")  {
      Light_ID = 7;
      Serial.print("I want to be 7 and am actually ");
      Serial.println(Light_ID);
@@ -333,7 +333,7 @@ void setup_board_params() {
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
-  }else if (mac == "CC:50:E3:4A:50:E0")  {
+  }else if (mac == "84:F3:EB:2F:DB:7D")  {
      Light_ID = 8;
      Serial.print("I want to be 8 and am actually ");
      Serial.println(Light_ID);
@@ -369,6 +369,42 @@ void setup_board_params() {
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
+  }else if (mac == "CC:50:E3:47:9D:FF")  {
+     Light_ID = 11;
+     sensor_name = "light11";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light11";
+    return;
+  }else if (mac == "CC:50:E3:4A:50:48")  {
+     Light_ID = 12;
+     sensor_name = "light12";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light12";
+    return;
+  }else if (mac == "84:0D:8E:83:9B:EC")  {
+     Light_ID = 13;
+     sensor_name = "light13";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light13";
+    return;
+  }else if (mac == "CC:50:E3:4A:4C:91")  {
+     Light_ID = 14;
+     sensor_name = "light14";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light14";
+    return;
+  }else if (mac == "CC:50:E3:4A:4B:3C")  {
+     Light_ID = 15;
+     sensor_name = "light15";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light15";
+    return;
+  }else if (mac == "80:7D:3A:3D:AD:F4")  {
+     Light_ID = 16;
+     sensor_name = "light16";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light16";
+    return;
   }else if (mac == "CC:50:E3:0A:18:7B")  {
      Light_ID = 17;
      Serial.print("I want to be 17 and am actually ");
@@ -381,7 +417,55 @@ void setup_board_params() {
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
-    }else if (mac == "84:0D:8E:83:03:44")  {
+  }else if (mac == "CC:50:E3:20:3D:CE")  {
+     Light_ID = 18;
+     sensor_name = "light18";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light18";
+    return;
+  }else if (mac == "84:0D:8E:83:94:24")  { 
+     Light_ID = 19;
+     sensor_name = "light19";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light19";
+    return;
+  }else if (mac == "80:7D:3A:3D:B1:A7")  {
+     Light_ID = 20;
+     sensor_name = "light20";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light20";
+    return;
+  }else if (mac == "CC:50:E3:4A:50:48")  {
+     Light_ID = 21;
+     sensor_name = "light21";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light21";
+    return;
+  }else if (mac == "CC:50:E3:4A:4F:q2")  { // MISSING
+     Light_ID = 22;
+     sensor_name = "light22";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light22";
+    return;
+  }else if (mac == "CC:50:E3:4A:4F:q3")  { // MISSING
+     Light_ID = 23;
+     sensor_name = "light23";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light23";
+    return;
+  }else if (mac == "CC:50:E3:4A:4F:q4")  { // MISSING
+     Light_ID = 24;
+     sensor_name = "light24";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light24";
+    return;
+  }else if (mac == "CC:50:E3:4A:4F:q5")  { // MISSING
+     Light_ID = 25;
+     sensor_name = "light25";
+     NUM_LEDSX = 50;
+     light_set_topic = "lights/light25";
+    return;
+  }else if (mac == "84:0D:8E:83:03:44")  {
      Light_ID = 7;
      sensor_name = "strip1";
      NUM_LEDSX = 117;
@@ -398,11 +482,12 @@ Serial.println(Light_ID);
 
 /********************************** CHECK FOR UPDATES (OTA) *****************************************/
 void checkForUpdates() {
+  effectString == "solid";
   oneWhite();
   String mac = WiFi.macAddress();
   String fwURL = String( fwUrlBase );
   String fwVersionURL = fwURL;
-  fwVersionURL.concat( "version" );
+  fwVersionURL.concat( "update_firmware/version" );
 
   Serial.println( "Checking for firmware updates." );
   Serial.print( "MAC address: " );
@@ -544,6 +629,17 @@ void callback(char* topic, byte* payload, unsigned int length) {
   inFade = false; // Kill the current fade
 
   sendState();
+  String logUrl = String(fwUrlBase);
+  logUrl.concat( "/lights/log");
+  String httpMessage = "Message arrived [";
+  httpMessage.concat( String(topic));
+  httpMessage.concat("] ");
+  httpMessage.concat(String(message));
+  HTTPClient httpClient;
+  httpClient.begin( "logUrl" );
+  int httpCode = httpClient.POST(httpMessage);
+
+  httpClient.end();
 }
 
 
@@ -693,9 +789,9 @@ void reconnect() {
     // Attempt to connect
     if (client.connect(sensor_name, mqtt_username, mqtt_password)) {
       Serial.println("connected");
-      client.subscribe(light_set_topic);
+      client.subscribe(light_set_topic, 1);
       setColor(0, 0, 0);
-      client.publish("esp/test", "Hello from ESP8266");
+      client.publish("esp/test", "Hello from ESP8266", 1);
       sendState();
     } else {
       Serial.print("failed, rc=");
@@ -751,6 +847,11 @@ void loop() {
   Serial.println(analogValue);// prints the CO value
   delay(60000);
   */
+
+// UPDATE
+  if (effectString == "update"){
+    checkForUpdates();
+  }
 
 
   //EFFECT BPM
