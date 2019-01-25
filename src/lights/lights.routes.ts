@@ -9,9 +9,9 @@ export class Lights {
   public routes(app): void {
 
 
-    app.route('/').get((req: Request, res: Response) => {
-      res.sendFile(path.join(__dirname + '/index.html'));
-    })
+    // app.route('/').get((req: Request, res: Response) => {
+    //   res.sendFile(path.join(__dirname + '/index.html'));
+    // })
 
     app.route('/lights/log').post((req: Request, res: Response) => {
       console.log('**********************')
@@ -85,18 +85,26 @@ export class Lights {
 
     app.route('/topics').get((req: Request, res: Response) => {
       const topicGroups = [
-        {name: 'ALL', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3',
-         'lights/stageleft/mail/border/light4', 'lights/stageleft/elevator/opening/light5', 'lights/stageright/elevator/opening/light6',
-          'lights/stageright/mail/border/light7', 'lights/stageright/mail/box/light8', 'lights/stageright/mail/box/light9',
-        'lights/stageright/mail/border/light10', 'testing/light17', 'lights/light11', 'lights/light20', 'lights/light19']},
-        {name: 'Mail', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3',
-        'lights/stageleft/mail/border/light4', 'lights/stageright/mail/border/light7', 'lights/stageright/mail/box/light8', 'lights/stageright/mail/box/light9',
-       'lights/stageright/mail/border/light10']},
-        {name: 'Mail Box', topics: ['lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3','lights/stageright/mail/box/light8',
-         'lights/stageright/mail/box/light9']},
-        {name: 'Mail Border', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/border/light4', 'lights/stageright/mail/border/light7',
-       'lights/stageright/mail/border/light10']},
-        {name: 'Elevator', topics: ['lights/stageleft/elevator/opening/light5', 'lights/stageright/elevator/opening/light6']}
+        {
+          name: 'ALL', topics: ['light1', 'light2', 'light3', 'light4', 'light5', 'light6',
+            'light7', 'light8', 'light9', 'light10', 'light11', 'light12', 'light13', 'light14', 
+            'light15', 'light16', 'light17', 'light18', 'light20', 'light19', 'light21', 
+            'light22']
+        },
+        {
+          name: 'Mail', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3',
+            'lights/stageleft/mail/border/light4', 'lights/stageright/mail/border/light7', 'lights/stageright/mail/box/light8', 'lights/stageright/mail/box/light9',
+            'lights/stageright/mail/border/light10']
+        },
+        {
+          name: 'Mail Box', topics: ['lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3', 'lights/stageright/mail/box/light8',
+            'lights/stageright/mail/box/light9']
+        },
+        {
+          name: 'Mail Border', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/border/light4', 'lights/stageright/mail/border/light7',
+            'lights/stageright/mail/border/light10']
+        },
+        { name: 'Elevator', topics: ['lights/stageleft/elevator/opening/light5', 'lights/stageright/elevator/opening/light6'] }
       ];
       res.send(topicGroups)
     })
