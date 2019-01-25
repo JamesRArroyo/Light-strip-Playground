@@ -33,8 +33,8 @@
 
 
 /************ WIFI and MQTT Information (CHANGE THESE FOR YOUR SETUP) ******************/
-const char* ssid = "printer"; //type your WIFI information inside the quotes
-const char* password = "magnolia";
+const char* ssid = "Virus"; //type your WIFI information inside the quotes
+const char* password = "w3lcom3123";
 const char* mqtt_server = "192.168.1.118";
 const char* mqtt_username = "admin";
 const char* mqtt_password = "password";
@@ -46,7 +46,7 @@ const int mqtt_port = 1883;
 char* sensor_name = "stripRoss"; //change this to whatever you want to call your device
 
 /* HTTP Server OTA */
-const int FW_VERSION = 55; // increment this on each update.
+const int FW_VERSION = 63; // increment this on each update.
 const char* fwUrlBase = "http://192.168.1.118:8266/"; // Url to the http server that will provide update.
 
 
@@ -405,7 +405,7 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      light_set_topic = "lights/light16";
     return;
-  }else if (mac == "CC:50:E3:0A:18:7B")  {
+  }else if (mac == "84:0D:8E:83:03:CD")  {
      Light_ID = 17;
      Serial.print("I want to be 17 and am actually ");
      Serial.println(Light_ID);
@@ -435,13 +435,13 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      light_set_topic = "lights/light20";
     return;
-  }else if (mac == "CC:50:E3:4A:50:48")  {
+  }else if (mac == "84:0D:8E:83:12:80")  {
      Light_ID = 21;
      sensor_name = "light21";
      NUM_LEDSX = 50;
      light_set_topic = "lights/light21";
     return;
-  }else if (mac == "CC:50:E3:4A:4F:q2")  { // MISSING
+  }else if (mac == "CC:50:E3:4A:4E:6E")  {
      Light_ID = 22;
      sensor_name = "light22";
      NUM_LEDSX = 50;
@@ -495,6 +495,8 @@ void checkForUpdates() {
   Serial.print( "Firmware version URL: " );
   Serial.println( fwVersionURL );
 
+  
+
 
   HTTPClient httpClient;
   httpClient.begin( fwVersionURL );
@@ -514,6 +516,8 @@ void checkForUpdates() {
       Serial.println( "Preparing to update" );
 
       String fwImageURL = fwURL;
+      Serial.println( fwImageURL );
+      fwImageURL.concat("update_firmware");
       Serial.println( fwImageURL );
       t_httpUpdate_return ret = ESPhttpUpdate.update( fwImageURL );
 
@@ -630,16 +634,21 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   sendState();
   String logUrl = String(fwUrlBase);
-  logUrl.concat( "/lights/log");
-  String httpMessage = "Message arrived [";
-  httpMessage.concat( String(topic));
-  httpMessage.concat("] ");
-  httpMessage.concat(String(message));
-  HTTPClient httpClient;
-  httpClient.begin( "logUrl" );
-  int httpCode = httpClient.POST(httpMessage);
+  logUrl.concat( "lights/log");
 
-  httpClient.end();
+  String msgPayload = "{ \"topic\" : \"" + String(topic) +"\", \"message\" : \"" + String(message) +"\"}";
+
+  Serial.println('******************************');
+  Serial.println(msgPayload);
+  Serial.println('******************************');
+  Serial.println(logUrl);
+
+  HTTPClient http;
+  http.begin( logUrl );
+  http.addHeader("Content-Type", "application/json"); 
+  http.POST(msgPayload);
+  http.writeToStream(&Serial);
+  http.end();
 }
 
 
@@ -824,7 +833,9 @@ void setColor(int inR, int inG, int inB) {
   Serial.println(inB);
 }
 
-
+int stompFadeAmount = 5;  // Set the amount to fade I usually do 5, 10, 15, 20, 25 etc even up to 255.
+int stompBrightness = 0;
+int stompLoopCount = 0;
 
 /********************************** START MAIN LOOP*****************************************/
 void loop() {
@@ -853,6 +864,34 @@ void loop() {
     checkForUpdates();
   }
 
+
+  //EFFECT STOMP
+  if (effectString == "stomp") {
+    Serial.print(effectString);
+    stompLoopCount++;
+    for (int i = 0; i < NUM_LEDS; i++) {
+      leds[i].setRGB(255, 255, 255);
+      leds[i].fadeLightBy(stompBrightness);
+    }
+    FastLED.show();
+    stompBrightness = stompBrightness + stompFadeAmount;
+    // reverse the direction of the fading at the ends of the fade:
+    if (stompBrightness == 0 || stompBrightness == 255) {
+      stompFadeAmount = -stompFadeAmount;
+    }
+    delay(5); // This delay sets speed of the fade. I usually do from 5-75 but you can always go higher.
+    Serial.println(stompLoopCount);
+    if (stompLoopCount == 2) {
+      Serial.println("Should Stop");
+      stateOn = false;
+      setColor(0, 0, 0);
+      sendState();
+      stompLoopCount = 0;
+    }
+
+    
+
+  }
 
   //EFFECT BPM
   if (effectString == "bpm") {
