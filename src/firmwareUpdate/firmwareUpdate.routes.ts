@@ -4,7 +4,7 @@ import * as path from 'path';
 
 
 export class FirmwareUpdates {
-    firmwareVersionNumber:string = '65';
+    firmwareVersionNumber:string = '71';
 
 
     public routes(app): void {

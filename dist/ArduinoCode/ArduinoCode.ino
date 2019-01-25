@@ -46,7 +46,7 @@ const int mqtt_port = 1883;
 char* sensor_name = "stripRoss"; //change this to whatever you want to call your device
 
 /* HTTP Server OTA */
-const int FW_VERSION = 70; // increment this on each update.
+const int FW_VERSION = 71; // increment this on each update.
 const char* fwUrlBase = "http://192.168.1.118:8266/"; // Url to the http server that will provide update.
 
 
@@ -257,7 +257,7 @@ void setup_board_params() {
      Serial.print(NUM_LEDSX);
      sensor_name = "light1";
      NUM_LEDSX = 50;
-     light_set_topic = "lights/stageleft/mail/border/light1";
+     light_set_topic = "light1";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -269,7 +269,7 @@ void setup_board_params() {
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "lights/stageleft/mail/box/light2";
+     light_set_topic = "light2";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -281,7 +281,7 @@ void setup_board_params() {
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "lights/stageleft/mail/box/light3";
+     light_set_topic = "light3";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -293,7 +293,7 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "lights/stageleft/mail/border/light4";
+     light_set_topic = "light4";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -305,7 +305,7 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "lights/stageleft/elevator/opening/light5";
+     light_set_topic = "light5";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -317,7 +317,7 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "lights/stageright/elevator/opening/light6";
+     light_set_topic = "light6";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -329,7 +329,7 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "lights/stageright/mail/border/light7";
+     light_set_topic = "light7";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -341,7 +341,7 @@ void setup_board_params() {
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "lights/stageright/mail/box/light8";
+     light_set_topic = "light8";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -353,7 +353,7 @@ void setup_board_params() {
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "lights/stageright/mail/box/light9";
+     light_set_topic = "light9";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -365,7 +365,7 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "lights/stageright/mail/border/light10";
+     light_set_topic = "light10";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
