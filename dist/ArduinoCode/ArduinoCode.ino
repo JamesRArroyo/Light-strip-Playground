@@ -33,8 +33,8 @@
 
 
 /************ WIFI and MQTT Information (CHANGE THESE FOR YOUR SETUP) ******************/
-const char* ssid = "printer"; //type your WIFI information inside the quotes
-const char* password = "magnolia";
+const char* ssid = "Virus"; //type your WIFI information inside the quotes
+const char* password = "w3lcom3123";
 const char* mqtt_server = "192.168.1.118";
 const char* mqtt_username = "admin";
 const char* mqtt_password = "password";
@@ -46,7 +46,7 @@ const int mqtt_port = 1883;
 char* sensor_name = "stripRoss"; //change this to whatever you want to call your device
 
 /* HTTP Server OTA */
-const int FW_VERSION = 65; // increment this on each update.
+const int FW_VERSION = 70; // increment this on each update.
 const char* fwUrlBase = "http://192.168.1.118:8266/"; // Url to the http server that will provide update.
 
 
@@ -74,7 +74,7 @@ const int BUFFER_SIZE = JSON_OBJECT_SIZE(10);
 byte Light_ID = 0;
 
 int NUM_LEDSX = 200;
-#define NUM_LEDS    200
+#define NUM_LEDS    150
 #define DATA_PIN    5
 #define AOUT_PIN    2
 #define DOUT_PIN    4
@@ -257,7 +257,7 @@ void setup_board_params() {
      Serial.print(NUM_LEDSX);
      sensor_name = "light1";
      NUM_LEDSX = 50;
-     light_set_topic = "wall";
+     light_set_topic = "lights/stageleft/mail/border/light1";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -269,7 +269,7 @@ void setup_board_params() {
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "wall";
+     light_set_topic = "lights/stageleft/mail/box/light2";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -281,7 +281,7 @@ void setup_board_params() {
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "wall";
+     light_set_topic = "lights/stageleft/mail/box/light3";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -293,7 +293,7 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "wall";
+     light_set_topic = "lights/stageleft/mail/border/light4";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -305,7 +305,7 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "elevator";
+     light_set_topic = "lights/stageleft/elevator/opening/light5";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -317,7 +317,7 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "light6";
+     light_set_topic = "lights/stageright/elevator/opening/light6";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -329,7 +329,7 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "light7";
+     light_set_topic = "lights/stageright/mail/border/light7";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -341,7 +341,7 @@ void setup_board_params() {
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "light8";
+     light_set_topic = "lights/stageright/mail/box/light8";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -353,7 +353,7 @@ void setup_board_params() {
      NUM_LEDSX = 150;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "light9";
+     light_set_topic = "lights/stageright/mail/box/light9";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -365,7 +365,7 @@ void setup_board_params() {
      NUM_LEDSX = 50;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "light10";
+     light_set_topic = "lights/stageright/mail/border/light10";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -373,37 +373,37 @@ void setup_board_params() {
      Light_ID = 11;
      sensor_name = "light11";
      NUM_LEDSX = 50;
-     light_set_topic = "light11";
+     light_set_topic = "lights/light11";
     return;
   }else if (mac == "CC:50:E3:4A:50:48")  {
      Light_ID = 12;
      sensor_name = "light12";
      NUM_LEDSX = 50;
-     light_set_topic = "light12";
+     light_set_topic = "lights/light12";
     return;
   }else if (mac == "84:0D:8E:83:9B:EC")  {
      Light_ID = 13;
      sensor_name = "light13";
      NUM_LEDSX = 50;
-     light_set_topic = "light13";
+     light_set_topic = "lights/light13";
     return;
   }else if (mac == "CC:50:E3:4A:4C:91")  {
      Light_ID = 14;
      sensor_name = "light14";
      NUM_LEDSX = 50;
-     light_set_topic = "light14";
+     light_set_topic = "lights/light14";
     return;
   }else if (mac == "CC:50:E3:4A:4B:3C")  {
      Light_ID = 15;
      sensor_name = "light15";
      NUM_LEDSX = 50;
-     light_set_topic = "light15";
+     light_set_topic = "lights/light15";
     return;
   }else if (mac == "80:7D:3A:3D:AD:F4")  {
      Light_ID = 16;
      sensor_name = "light16";
      NUM_LEDSX = 50;
-     light_set_topic = "light16";
+     light_set_topic = "lights/light16";
     return;
   }else if (mac == "84:0D:8E:83:03:CD")  {
      Light_ID = 17;
@@ -413,7 +413,7 @@ void setup_board_params() {
      NUM_LEDSX = 117;
      Serial.print("num of LEDs is ");
      Serial.print(NUM_LEDSX);
-     light_set_topic = "light17";
+     light_set_topic = "testing/light17";
      Serial.print("My topic is ");
      Serial.println(light_set_topic);
     return;
@@ -421,49 +421,49 @@ void setup_board_params() {
      Light_ID = 18;
      sensor_name = "light18";
      NUM_LEDSX = 50;
-     light_set_topic = "light18";
+     light_set_topic = "lights/light18";
     return;
   }else if (mac == "84:0D:8E:83:94:24")  { 
      Light_ID = 19;
      sensor_name = "light19";
      NUM_LEDSX = 50;
-     light_set_topic = "light19";
+     light_set_topic = "lights/light19";
     return;
   }else if (mac == "80:7D:3A:3D:B1:A7")  {
      Light_ID = 20;
      sensor_name = "light20";
      NUM_LEDSX = 50;
-     light_set_topic = "light20";
+     light_set_topic = "lights/light20";
     return;
   }else if (mac == "84:0D:8E:83:12:80")  {
      Light_ID = 21;
      sensor_name = "light21";
      NUM_LEDSX = 50;
-     light_set_topic = "light21";
+     light_set_topic = "lights/light21";
     return;
   }else if (mac == "CC:50:E3:4A:4E:6E")  {
      Light_ID = 22;
      sensor_name = "light22";
      NUM_LEDSX = 50;
-     light_set_topic = "light22";
+     light_set_topic = "lights/light22";
     return;
   }else if (mac == "CC:50:E3:4A:4F:q3")  { // MISSING
      Light_ID = 23;
      sensor_name = "light23";
      NUM_LEDSX = 50;
-     light_set_topic = "light23";
+     light_set_topic = "lights/light23";
     return;
   }else if (mac == "CC:50:E3:4A:4F:q4")  { // MISSING
      Light_ID = 24;
      sensor_name = "light24";
      NUM_LEDSX = 50;
-     light_set_topic = "light24";
+     light_set_topic = "lights/light24";
     return;
   }else if (mac == "CC:50:E3:4A:4F:q5")  { // MISSING
      Light_ID = 25;
      sensor_name = "light25";
      NUM_LEDSX = 50;
-     light_set_topic = "light25";
+     light_set_topic = "lights/light25";
     return;
   }else if (mac == "84:0D:8E:83:03:44")  {
      Light_ID = 7;
@@ -863,6 +863,13 @@ void loop() {
   if (effectString == "update"){
     checkForUpdates();
   }
+
+
+
+  //METEOR
+  if (effectString == "meteor") {
+    meteorRain(0xff,0xff,0xff,10, 64, true, 80);
+  }  
 
 
   //EFFECT STOMP
@@ -1497,4 +1504,57 @@ void temp2rgb(unsigned int kelvin) {
             blue = tmp_blue;
         }
     }
+}
+
+
+void showStrip() {
+
+   // FastLED
+   FastLED.show();
+}
+
+void setPixel(int Pixel, byte red, byte green, byte blue) {
+   // FastLED
+   leds[Pixel].r = red;
+   leds[Pixel].g = green;
+   leds[Pixel].b = blue;
+}
+
+void setAll(byte red, byte green, byte blue) {
+  for(int i = 0; i < NUM_LEDS; i++ ) {
+    setPixel(i, red, green, blue); 
+  }
+  showStrip();
+}
+
+void meteorRain(byte red, byte green, byte blue, byte meteorSize, byte meteorTrailDecay, boolean meteorRandomDecay, int SpeedDelay) {  
+  setAll(0,0,0);
+  
+  for(int i = 0; i < 25+25; i++) {
+    
+    
+    // fade brightness all LEDs one step
+    for(int j=0; j<25; j++) {
+      if( (!meteorRandomDecay) || (random(10)>5) ) {
+        fadeToBlack(j, meteorTrailDecay );        
+      }
+    }
+    
+    // draw meteor
+    for(int j = 0; j < meteorSize; j++) {
+      if( ( i-j <25) && (i-j>=0) ) {
+        setPixel(i-j, red, green, blue);
+      } 
+    }
+   
+    showStrip();
+    delay(SpeedDelay);
+  }
+}
+
+void fadeToBlack(int ledNo, byte fadeValue) {
+
+   // FastLED
+   leds[ledNo].fadeToBlackBy( fadeValue );
+
 }
