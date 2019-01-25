@@ -13,8 +13,11 @@ export class LightBoardComponent implements OnInit {
   realTimeBrightness = 255;
   activeColor = 'white';
   activeEffect = 'solid';
-  effects = ['solid', 'meteor', 'bpm', 'candy cane', 'confetti', 'cyclon rainbow', 'dots', 'fire', 'glitter', 'juggle', 'lightning',
-   'police all', 'police one', 'rainbow', 'rainbow with glitter', 'sinelon', 'twinkle', 'noise', 'ripple', 'update']
+  effects = ['solid', '----------Subtle-----------', 'confetti', 'dots', 'twinkle', 'glitter', 'lightning', 'candy cane', 
+  '----------LOUD-----------', 'bpm', 'rainbow', 'rainbow with glitter',  
+  '----------Elevator-----------', 'meteor',  
+  '----------Chasers-----------', 'ripple', 'cyclon rainbow', 'fire', 'juggle', 'police all', 'police one',  'sinelon',
+  '----------DO NOT USE-----------',  'update']
 
   constructor(private lightService: LightService) { }
 

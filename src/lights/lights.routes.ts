@@ -92,19 +92,20 @@ export class Lights {
             'light22']
         },
         {
-          name: 'Mail', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3',
-            'lights/stageleft/mail/border/light4', 'lights/stageright/mail/border/light7', 'lights/stageright/mail/box/light8', 'lights/stageright/mail/box/light9',
-            'lights/stageright/mail/border/light10']
+          name: 'Desks', topics: ['light17', 'light18', 'light19']
         },
         {
-          name: 'Mail Box', topics: ['lights/stageleft/mail/box/light2', 'lights/stageleft/mail/box/light3', 'lights/stageright/mail/box/light8',
-            'lights/stageright/mail/box/light9']
+          name: 'Elevator', topics: ['light5', 'light6']
         },
         {
-          name: 'Mail Border', topics: ['lights/stageleft/mail/border/light1', 'lights/stageleft/mail/border/light4', 'lights/stageright/mail/border/light7',
-            'lights/stageright/mail/border/light10']
+          name: 'Clocks', topics: ['light11', 'light12', 'light13', 'light14', 'light15', 'light16']
         },
-        { name: 'Elevator', topics: ['lights/stageleft/elevator/opening/light5', 'lights/stageright/elevator/opening/light6'] }
+        { 
+          name: 'door', topics: ['light21'] 
+        },
+        {
+          name: 'insideE', topics: ['light20']
+        }
       ];
       res.send(topicGroups)
     })
