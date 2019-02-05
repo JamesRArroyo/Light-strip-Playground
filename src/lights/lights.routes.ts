@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import * as fs from 'fs';
-import * as path from 'path';
 import * as mqtt from 'mqtt';
 
 
@@ -62,10 +60,8 @@ export class Lights {
         }
       }
 
-      let options = { qos:0};
       let msg = JSON.stringify(lightConfig);
-      console.log(topics);
-      console.log(msg);
+
       client.on('connect', () => {
         topics.forEach(topic => {
           const topicObj = {};
@@ -84,6 +80,7 @@ export class Lights {
 
 
     app.route('/topics').get((req: Request, res: Response) => {
+      /* Temp spot to store light groups */
       const topicGroups = [
         {
           name: 'ALL', topics: ['light1', 'light2', 'light3', 'light4', 'light5', 'light6',
